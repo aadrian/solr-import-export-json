@@ -6,25 +6,37 @@ As the title states, this little project will help you to save your collection i
 
 Please report issues at https://github.com/freedev/solr-import-export-json/issues
 
-### Install
+### Build
 
-To execute this console app you need to satisfy few dependency (java 8, git, maven), if you are a java developer probably you already have everything, on the other hand if not if you have Linux execute the following commands:
+To build this project, [Java 8](https://www.azul.com/downloads/zulu/), [Git](https://git-scm.com/) and [Gradle](https://gradle.org/) are required.
 
-    sudo apt-get update
-    sudo add-apt-repository ppa:openjdk-r/ppa
-    sudo apt-get update
-    sudo apt-get install openjdk-8-jdk
-    sudo apt-get install maven
-  
+```bash
     git clone https://github.com/freedev/solr-import-export-json.git
     cd solr-import-export-json
-    mvn clean package
+    gradle build
+``` 
 
-Now you're ready.
+The steps above will create the distributions in the `./build/distributions/` directory.
 
-### How to use it
 
-This is the list of command line parameters.
+### Install
+
+This tool requires only Java 8 (e,g. Zulu OpenJDK).
+
+Just copy to the target machine the distribution produced in the build task above(or download the distribution from GitHub) and unpack it.
+
+### Usage
+
+From the application home (where the distribution was unpacked), run for Unix systems:
+```bash
+./bin/solr-import-export --help
+```
+or run for Windows: 
+```bash
+bin\solr-import-export.bat --help
+```
+
+A list of **available** command line parameters:
 
 
      usage: myapp [-a <arg>] [-d] [-D] [-f <arg>] [-h] [-k <arg>] [-o <arg>]
@@ -51,24 +63,24 @@ This is the list of command line parameters.
 
 export all documents into a json file
 
-    ./run.sh -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json
+    ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json
 
 import documents from json
 
-    ./run.sh -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json 
+    ./bin/solr-import-export -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json 
 
 export part of documents, like adding a `fq`  Solr parameter to the export
 
-     ./run.sh -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json --filterQuery field:value
+     ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json --filterQuery field:value
 
 import documents from json but first delete all documents in the collection
 
-     ./run.sh -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json --deleteAll
+     ./bin/solr-import-export -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json --deleteAll
 
 export documents and skip few fields. In the example the will be skipped the fields: `field1_a`, all the fields starting with `field2_` and all the fields ending with `_date`
 
-     ./run.sh -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json --skipFields field1_a,field2_*,*_date
+     ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json --skipFields field1_a,field2_*,*_date
 
 Import documents, skip first 49835000 records from file, commit every 200000 documents, block size 5000 (faster than default 500) 
 
-    ./run.sh -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json -x 49835000 -c 200000 -b 5000 
+    ./bin/solr-import-export -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json -x 49835000 -c 200000 -b 5000 
