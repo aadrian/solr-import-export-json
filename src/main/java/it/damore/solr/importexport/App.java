@@ -83,34 +83,32 @@ public class App {
   /**
    * @param counter the counter to set
    */
-  public static long incrementCounter(long counter)
-  {
+  public static long incrementCounter(long counter) {
     App.counter += counter;
     return App.counter;
   }
 
-  public static void main(String[] args) throws IOException, ParseException, URISyntaxException
-  {
+  public static void main(String[] args) throws IOException, ParseException, URISyntaxException {
 
     config = ConfigFactory.getConfigFromArgs(args);
 
     includeFieldsEquals = config.getIncludeFieldSet()
-                                .stream()
-                                .filter(s -> s.getMatch() == MatchType.EQUAL)
-                                .collect(Collectors.toSet());
+            .stream()
+            .filter(s -> s.getMatch() == MatchType.EQUAL)
+            .collect(Collectors.toSet());
 
     skipFieldsEquals = config.getSkipFieldSet()
-                             .stream()
-                             .filter(s -> s.getMatch() == MatchType.EQUAL)
-                             .collect(Collectors.toSet());
+            .stream()
+            .filter(s -> s.getMatch() == MatchType.EQUAL)
+            .collect(Collectors.toSet());
     skipFieldsStartWith = config.getSkipFieldSet()
-                                .stream()
-                                .filter(s -> s.getMatch() == MatchType.STARTS_WITH)
-                                .collect(Collectors.toSet());
+            .stream()
+            .filter(s -> s.getMatch() == MatchType.STARTS_WITH)
+            .collect(Collectors.toSet());
     skipFieldsEndWith = config.getSkipFieldSet()
-                              .stream()
-                              .filter(s -> s.getMatch() == MatchType.ENDS_WITH)
-                              .collect(Collectors.toSet());
+            .stream()
+            .filter(s -> s.getMatch() == MatchType.ENDS_WITH)
+            .collect(Collectors.toSet());
     skipCount = config.getSkipCount();
     commitAfter = config.getCommitAfter();
 
@@ -121,7 +119,7 @@ public class App {
     }
 
     try (HttpSolrClient client = new HttpSolrClient.Builder().withBaseSolrUrl(config.getSolrUrl())
-                                                             .build()) {
+            .build()) {
 
       try {
         switch (config.getActionType()) {
@@ -158,12 +156,12 @@ public class App {
    * @throws MalformedURLException
    */
 
-  private static void readUniqueKeyFromSolrSchema() throws IOException, JsonParseException, JsonMappingException, MalformedURLException
-  {
+  private static void readUniqueKeyFromSolrSchema() throws IOException, JsonParseException, JsonMappingException, MalformedURLException {
     String sUrl = config.getSolrUrl() + "/schema/uniquekey?wt=json";
     Map<String, Object> uniqueKey = null;
     try {
-      uniqueKey = objectMapper.readValue(readUrl(sUrl), new TypeReference<Map<String, Object>>() {});
+      uniqueKey = objectMapper.readValue(readUrl(sUrl), new TypeReference<Map<String, Object>>() {
+      });
       if (uniqueKey.containsKey("uniqueKey")) {
         config.setUniqueKey((String) uniqueKey.get("uniqueKey"));
       } else {
@@ -182,15 +180,14 @@ public class App {
    * @throws MalformedURLException
    * @throws IOException
    */
-  private static String readUrl(String sUrl) throws MalformedURLException, IOException
-  {
+  private static String readUrl(String sUrl) throws MalformedURLException, IOException {
     StringBuilder sbJson = new StringBuilder();
     URL url = new URL(sUrl);
     String userInfo = url.getUserInfo();
     URLConnection openConnection = url.openConnection();
     if (userInfo != null && !userInfo.isEmpty()) {
       String authStr = Base64.getEncoder()
-                             .encodeToString(userInfo.getBytes());
+              .encodeToString(userInfo.getBytes());
       openConnection.setRequestProperty("Authorization", "Basic " + authStr);
     }
 
@@ -206,14 +203,14 @@ public class App {
    * @param j
    * @return
    */
-  private static SolrInputDocument json2SolrInputDocument(String j)
-  {
+  private static SolrInputDocument json2SolrInputDocument(String j) {
     SolrInputDocument s = new SolrInputDocument();
     try {
-      Map<String, Object> map = objectMapper.readValue(j, new TypeReference<Map<String, Object>>() {});
+      Map<String, Object> map = objectMapper.readValue(j, new TypeReference<Map<String, Object>>() {
+      });
       for (Entry<String, Object> e : map.entrySet()) {
         if (!e.getKey()
-              .equals("_version_"))
+                .equals("_version_"))
           s.addField(e.getKey(), e.getValue());
       }
     } catch (IOException e) {
@@ -229,8 +226,7 @@ public class App {
    * @throws IOException
    * @throws SolrServerException
    */
-  private static void writeAllDocuments(HttpSolrClient client, File outputFile) throws FileNotFoundException, IOException, SolrServerException
-  {
+  private static void writeAllDocuments(HttpSolrClient client, File outputFile) throws FileNotFoundException, IOException, SolrServerException {
     AtomicInteger counter = new AtomicInteger(10000);
     if (!config.getDryRun() && config.getDeleteAll()) {
       logger.info("delete all!");
@@ -240,41 +236,40 @@ public class App {
 
     try (BufferedReader pw = new BufferedReader(new FileReader(outputFile))) {
       pw.lines()
-        .collect(StreamUtils.batchCollector(config.getBlockSize(), l ->
-          {
-            List<SolrInputDocument> collect = l.stream()
-                                               .map(App::json2SolrInputDocument)
-                                               .map(d ->
-                                                 {
-                                                   skipFieldsEquals.forEach(f -> d.removeField(f.getText()));
-                                                   if (!skipFieldsStartWith.isEmpty()) {
-                                                     d.getFieldNames()
-                                                      .removeIf(name -> skipFieldsStartWith.stream()
-                                                                                           .anyMatch(skipField -> name.startsWith(skipField.getText())));
-                                                   }
-                                                   if (!skipFieldsEndWith.isEmpty()) {
-                                                     d.getFieldNames()
-                                                      .removeIf(name -> skipFieldsEndWith.stream()
-                                                                                         .anyMatch(skipField -> name.endsWith(skipField.getText())));
-                                                   }
-                                                   return d;
-                                                 })
-                                               .collect(Collectors.toList());
-            if (!insertBatch(client, collect)) {
-              int retry = 5;
-              while (--retry > 0 && !insertBatch(client, collect))// randomly when imported 10M documents, solr failed
-                                                                  // on Timeout exactly 10 minutes..
-              ;
-            }
-          }));
+              .collect(StreamUtils.batchCollector(config.getBlockSize(), l ->
+              {
+                List<SolrInputDocument> collect = l.stream()
+                        .map(App::json2SolrInputDocument)
+                        .map(d ->
+                        {
+                          skipFieldsEquals.forEach(f -> d.removeField(f.getText()));
+                          if (!skipFieldsStartWith.isEmpty()) {
+                            d.getFieldNames()
+                                    .removeIf(name -> skipFieldsStartWith.stream()
+                                            .anyMatch(skipField -> name.startsWith(skipField.getText())));
+                          }
+                          if (!skipFieldsEndWith.isEmpty()) {
+                            d.getFieldNames()
+                                    .removeIf(name -> skipFieldsEndWith.stream()
+                                            .anyMatch(skipField -> name.endsWith(skipField.getText())));
+                          }
+                          return d;
+                        })
+                        .collect(Collectors.toList());
+                if (!insertBatch(client, collect)) {
+                  int retry = 5;
+                  while (--retry > 0 && !insertBatch(client, collect))// randomly when imported 10M documents, solr failed
+                    // on Timeout exactly 10 minutes..
+                    ;
+                }
+              }));
     }
 
     commit(client);
 
   }
 
-  private static boolean insertBatch(HttpSolrClient client, List<SolrInputDocument> collect)
-  {
+  private static boolean insertBatch(HttpSolrClient client, List<SolrInputDocument> collect) {
     try {
 
       if (!config.getDryRun()) {
@@ -296,8 +291,7 @@ public class App {
     return true;
   }
 
-  private static void commit(HttpSolrClient client) throws SolrServerException, IOException
-  {
+  private static void commit(HttpSolrClient client) throws SolrServerException, IOException {
     if (!config.getDryRun()) {
       client.commit();
       logger.info("Committed");
@@ -310,8 +304,7 @@ public class App {
    * @throws SolrServerException
    * @throws IOException
    */
-  private static void readAllDocuments(HttpSolrClient client, File outputFile) throws SolrServerException, IOException
-  {
+  private static void readAllDocuments(HttpSolrClient client, File outputFile) throws SolrServerException, IOException {
 
     SolrQuery solrQuery = new SolrQuery();
     solrQuery.setTimeAllowed(-1);
@@ -322,8 +315,8 @@ public class App {
     }
     if (!includeFieldsEquals.isEmpty()) {
       solrQuery.setFields(includeFieldsEquals.stream()
-                                             .map(f -> f.getText())
-                                             .collect(Collectors.joining(" ")));
+              .map(f -> f.getText())
+              .collect(Collectors.joining(" ")));
     }
     solrQuery.setRows(0);
 
@@ -340,7 +333,7 @@ public class App {
     QueryResponse r = client.query(solrQuery);
 
     long nDocuments = r.getResults()
-                       .getNumFound();
+            .getNumFound();
     logger.info("Found " + nDocuments + " documents");
 
     if (!config.getDryRun()) {
@@ -362,18 +355,18 @@ public class App {
             skipFieldsEquals.forEach(f -> d.removeFields(f.getText()));
             if (skipFieldsStartWith.size() > 0 || skipFieldsEndWith.size() > 0) {
               Map<String, Object> collect = d.entrySet()
-                                             .stream()
-                                             .filter(e -> !skipFieldsStartWith.stream()
-                                                                              .filter(f -> e.getKey()
-                                                                                            .startsWith(f.getText()))
-                                                                              .findFirst()
-                                                                              .isPresent())
-                                             .filter(e -> !skipFieldsEndWith.stream()
-                                                                            .filter(f -> e.getKey()
-                                                                                          .endsWith(f.getText()))
-                                                                            .findFirst()
-                                                                            .isPresent())
-                                             .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                      .stream()
+                      .filter(e -> !skipFieldsStartWith.stream()
+                              .filter(f -> e.getKey()
+                                      .startsWith(f.getText()))
+                              .findFirst()
+                              .isPresent())
+                      .filter(e -> !skipFieldsEndWith.stream()
+                              .filter(f -> e.getKey()
+                                      .endsWith(f.getText()))
+                              .findFirst()
+                              .isPresent())
+                      .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
               pw.write(objectMapper.writeValueAsString(collect));
             } else {
               pw.write(objectMapper.writeValueAsString(d));

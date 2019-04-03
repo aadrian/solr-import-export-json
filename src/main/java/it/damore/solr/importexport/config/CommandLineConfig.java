@@ -26,231 +26,224 @@ import java.util.stream.Collectors;
 
 /**
  * @author freedev
- *
  */
 public class CommandLineConfig {
 
-  public enum ActionType {
-    IMPORT("import"),
-    EXPORT("export"),
-    BACKUP("backup"),
-    RESTORE("restore");
-    
-    private String name;
+    public enum ActionType {
+        IMPORT("import"),
+        EXPORT("export"),
+        BACKUP("backup"),
+        RESTORE("restore");
 
-    private ActionType(String name) {
-        this.name = name;
+        private String name;
+
+        private ActionType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public static List<String> getNames() {
+            return Arrays.asList(ActionType.values()).stream().map(ActionType::getName).collect(Collectors.toList());
+        }
+
     }
-    
-    public String getName() {
-        return name;
+
+    public static final int DEFAULT_BLOCK_SIZE = 5000;
+    public static final String DEFAULT_DATETIME_FORMAT = "YYYY-MM-dd'T'HH:mm:sss'Z'";
+
+    private ActionType actionType;
+    private String solrUrl;
+    private String fileName;
+    private Boolean deleteAll;
+    private Set<SolrField> skipFieldSet = Collections.emptySet();
+    private Set<SolrField> includeFieldSet = Collections.emptySet();
+    private String filterQuery;
+    private String uniqueKey;
+    private Boolean dryRun;
+    private long skipCount;
+    private Integer commitAfter;
+    private int blockSize = DEFAULT_BLOCK_SIZE;
+    private String dateTimeFormat = DEFAULT_DATETIME_FORMAT;
+
+    /**
+     * @return the solrUrl
+     */
+    public String getSolrUrl() {
+        return solrUrl;
     }
-    
-    public static List<String> getNames() {
-        return Arrays.asList(ActionType.values()).stream().map(ActionType::getName).collect(Collectors.toList());
+
+    /**
+     * @param solrUrl the solrUrl to set
+     */
+    public void setSolrUrl(String solrUrl) {
+        this.solrUrl = solrUrl;
     }
 
-  }
-  
-  public static final int DEFAULT_BLOCK_SIZE = 5000;
-  public static final String DEFAULT_DATETIME_FORMAT = "YYYY-MM-dd'T'HH:mm:sss'Z'";
-  
-  private ActionType actionType;
-  private String solrUrl;
-  private String fileName;
-  private Boolean deleteAll;
-  private Set<SolrField> skipFieldSet = Collections.emptySet();
-  private Set<SolrField> includeFieldSet = Collections.emptySet();
-  private String filterQuery;
-  private String uniqueKey;
-  private Boolean dryRun;
-  private long skipCount;
-  private Integer commitAfter;
-  private int blockSize = DEFAULT_BLOCK_SIZE;
-  private String dateTimeFormat = DEFAULT_DATETIME_FORMAT;
-  /**
-   * @return the solrUrl
-   */
-  public String getSolrUrl() {
-    return solrUrl;
-  }
+    /**
+     * @return the dryRun
+     */
+    public Boolean getDryRun() {
+        return dryRun;
+    }
 
-  /**
-   * @param solrUrl the solrUrl to set
-   */
-  public void setSolrUrl(String solrUrl) {
-    this.solrUrl = solrUrl;
-  }
+    /**
+     * @param dryRun the dryRun to set
+     */
+    public void setDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
+    }
 
-  /**
-   * @return the dryRun
-   */
-  public Boolean getDryRun() {
-    return dryRun;
-  }
+    /**
+     * @return the ActionType
+     */
+    public ActionType getActionType() {
+        return actionType;
+    }
 
-  /**
-   * @param dryRun the dryRun to set
-   */
-  public void setDryRun(Boolean dryRun) {
-    this.dryRun = dryRun;
-  }
+    /**
+     * @param actionType the ActionType to set
+     */
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
+    }
 
-  /**
-   * @return the ActionType
-   */
-  public ActionType getActionType() {
-    return actionType;
-  }
+    /**
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
 
-  /**
-   * @param actionType the ActionType to set
-   */
-  public void setActionType(ActionType actionType) {
-    this.actionType = actionType;
-  }
-
-  /**
-   * 
-   * @return fileName
-   */
-  public String getFileName() {
-    return fileName;
-  }
-
-  /**
-   * 
-   * @param fileName
-   */
-  public void setFileName(String fileName) {
-    this.fileName = fileName;
-  }
-
-  
-  /**
-   * @return the filterQuery
-   */
-  public String getFilterQuery() {
-    return filterQuery;
-  }
-
-  /**
-   * @param filterQuery the filterQuery to set
-   */
-  public void setFilterQuery(String filterQuery) {
-    this.filterQuery = filterQuery;
-  }
-
-  
-  /**
-   * @return the deleteAll
-   */
-  public Boolean getDeleteAll() {
-    return deleteAll;
-  }
-
-  /**
-   * @param deleteAll the deleteAll to set
-   */
-  public void setDeleteAll(Boolean deleteAll) {
-    this.deleteAll = deleteAll;
-  }
-
-  /**
-   * @return the skipFieldsSet
-   */
-  public Set<SolrField> getSkipFieldSet() {
-    return skipFieldSet;
-  }
-
-  /**
-   * @param skipFieldSet the list of fields to skip
-   */
-  public void setSkipFieldSet(Set<SolrField> skipFieldSet) {
-    this.skipFieldSet = skipFieldSet;
-  }
-
-  /**
-   * @return the uniqueId
-   */
-  public String getUniqueKey() {
-    return uniqueKey;
-  }
-
-  /**
-   * @param uniqueId the uniqueId to set
-   */
-  public void setUniqueKey(String uniqueId) {
-    this.uniqueKey = uniqueId;
-  }
-
-  
-  /**
-   * @return the blockSize
-   */
-  public int getBlockSize() {
-    return blockSize;
-  }
-
-  /**
-   * @param blockSize the blockSize to set
-   */
-  public void setBlockSize(int blockSize) {
-    this.blockSize = blockSize;
-  }
-
-  
-  /**
-   * @return the dateTimeFormat
-   */
-  public String getDateTimeFormat()
-  {
-    return dateTimeFormat;
-  }
-
-  /**
-   * @param dateTimeFormat the dateTimeFormat to set
-   */
-  public void setDateTimeFormat(String dateTimeFormat)
-  {
-    this.dateTimeFormat = dateTimeFormat;
-  }
-
-  public Set<SolrField> getIncludeFieldSet()
-  {
-    return includeFieldSet;
-  }
-
-  public void setIncludeFieldSet(Set<SolrField> includeFieldSet)
-  {
-    this.includeFieldSet = includeFieldSet;
-  }
-  
-  public long getSkipCount() {
-    return skipCount;
-  }
-
-  public void setSkipCount(long skipCount) {
-    this.skipCount = skipCount;
-  }
+    /**
+     * @param fileName
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
 
-  public Integer getCommitAfter() {
-    return commitAfter;
-  }
+    /**
+     * @return the filterQuery
+     */
+    public String getFilterQuery() {
+        return filterQuery;
+    }
 
-  public void setCommitAfter(Integer commitAfter) {
-    this.commitAfter = commitAfter;
-  }
+    /**
+     * @param filterQuery the filterQuery to set
+     */
+    public void setFilterQuery(String filterQuery) {
+        this.filterQuery = filterQuery;
+    }
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return String.format("CommandLineConfig [actionType=%s, solrUrl=%s, fileName=%s, deleteAll=%s, skipFieldsSet=%s, filterQuery=%s, uniqueKey=%s, dryRun=%s, blockSize=%s, dateTimeFormat=%s]",
-                         actionType, solrUrl, fileName, deleteAll, skipFieldSet, filterQuery, uniqueKey, dryRun, blockSize, dateTimeFormat);
-  }
+
+    /**
+     * @return the deleteAll
+     */
+    public Boolean getDeleteAll() {
+        return deleteAll;
+    }
+
+    /**
+     * @param deleteAll the deleteAll to set
+     */
+    public void setDeleteAll(Boolean deleteAll) {
+        this.deleteAll = deleteAll;
+    }
+
+    /**
+     * @return the skipFieldsSet
+     */
+    public Set<SolrField> getSkipFieldSet() {
+        return skipFieldSet;
+    }
+
+    /**
+     * @param skipFieldSet the list of fields to skip
+     */
+    public void setSkipFieldSet(Set<SolrField> skipFieldSet) {
+        this.skipFieldSet = skipFieldSet;
+    }
+
+    /**
+     * @return the uniqueId
+     */
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+
+    /**
+     * @param uniqueId the uniqueId to set
+     */
+    public void setUniqueKey(String uniqueId) {
+        this.uniqueKey = uniqueId;
+    }
+
+
+    /**
+     * @return the blockSize
+     */
+    public int getBlockSize() {
+        return blockSize;
+    }
+
+    /**
+     * @param blockSize the blockSize to set
+     */
+    public void setBlockSize(int blockSize) {
+        this.blockSize = blockSize;
+    }
+
+
+    /**
+     * @return the dateTimeFormat
+     */
+    public String getDateTimeFormat() {
+        return dateTimeFormat;
+    }
+
+    /**
+     * @param dateTimeFormat the dateTimeFormat to set
+     */
+    public void setDateTimeFormat(String dateTimeFormat) {
+        this.dateTimeFormat = dateTimeFormat;
+    }
+
+    public Set<SolrField> getIncludeFieldSet() {
+        return includeFieldSet;
+    }
+
+    public void setIncludeFieldSet(Set<SolrField> includeFieldSet) {
+        this.includeFieldSet = includeFieldSet;
+    }
+
+    public long getSkipCount() {
+        return skipCount;
+    }
+
+    public void setSkipCount(long skipCount) {
+        this.skipCount = skipCount;
+    }
+
+
+    public Integer getCommitAfter() {
+        return commitAfter;
+    }
+
+    public void setCommitAfter(Integer commitAfter) {
+        this.commitAfter = commitAfter;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("CommandLineConfig [actionType=%s, solrUrl=%s, fileName=%s, deleteAll=%s, skipFieldsSet=%s, filterQuery=%s, uniqueKey=%s, dryRun=%s, blockSize=%s, dateTimeFormat=%s]",
+                actionType, solrUrl, fileName, deleteAll, skipFieldSet, filterQuery, uniqueKey, dryRun, blockSize, dateTimeFormat);
+    }
 
 }

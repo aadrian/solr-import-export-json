@@ -38,27 +38,27 @@ public class ConfigFactory {
 
 
   /**
-   * read parameters from args
-   * 
+   * Read parameters from args
+   *
    * @param args
    * @return Config
    * @throws ParseException
    */
-  public static CommandLineConfig getConfigFromArgs(String[] args) throws ParseException
-  {
+  public static CommandLineConfig getConfigFromArgs(String[] args) throws ParseException {
     CommandLine cmd = parseCommandLine(args);
-    String solrUrl = cmd.getOptionValue(SOLR_URL[1]);
-    String skipFields = cmd.getOptionValue(SKIP_FIELDS[1]);
-    String includeFields = cmd.getOptionValue(INCLUDE_FIELDS[1]);
-    String file = cmd.getOptionValue(OUTPUT[1]);
-    String filterQuery = cmd.getOptionValue(FILTER_QUERY[1]);
-    String uniqueKey = cmd.getOptionValue(UNIQUE_KEY[1]);
-    Boolean deleteAll = cmd.hasOption(DELETE_ALL[1]);
-    Boolean dryRun = cmd.hasOption(DRY_RUN[1]);
-    String actionType = cmd.getOptionValue(ACTION_TYPE[1]);
-    String blockSize = cmd.getOptionValue(BLOCK_SIZE[1]);
-    String skipCount = cmd.getOptionValue(SKIP_DOCS[1]);
-    String commitAfter = cmd.getOptionValue(COMMIT_DURING_WORK[1]);
+
+    String solrUrl        = cmd.getOptionValue(SOLR_URL[1]);
+    String skipFields     = cmd.getOptionValue(SKIP_FIELDS[1]);
+    String includeFields  = cmd.getOptionValue(INCLUDE_FIELDS[1]);
+    String file           = cmd.getOptionValue(OUTPUT[1]);
+    String filterQuery    = cmd.getOptionValue(FILTER_QUERY[1]);
+    String uniqueKey      = cmd.getOptionValue(UNIQUE_KEY[1]);
+    Boolean deleteAll     = cmd.hasOption(DELETE_ALL[1]);
+    Boolean dryRun        = cmd.hasOption(DRY_RUN[1]);
+    String actionType     = cmd.getOptionValue(ACTION_TYPE[1]);
+    String blockSize      = cmd.getOptionValue(BLOCK_SIZE[1]);
+    String skipCount      = cmd.getOptionValue(SKIP_DOCS[1]);
+    String commitAfter    = cmd.getOptionValue(COMMIT_DURING_WORK[1]);
     String dateTimeFormat = cmd.getOptionValue(DATETIME_FORMAT[1]);
 
     if (actionType == null) {
@@ -125,33 +125,31 @@ public class ConfigFactory {
    * @param includeFields
    * @return
    */
-  private static Set<SolrField> convertStringToSolrFieldSet(String includeFields)
-  {
+  private static Set<SolrField> convertStringToSolrFieldSet(String includeFields) {
     return Pattern.compile(",")
-                  .splitAsStream(includeFields)
-                  .map(String::trim)
-                  .filter(s -> !s.equals("*"))
-                  .map(s ->
-                    {
-                      if (s.startsWith("*")) {
-                        return new SolrField(s.substring(1), MatchType.ENDS_WITH);
-                      } else if (s.endsWith("*")) {
-                        return new SolrField(s.substring(0, s.length() - 1), MatchType.STARTS_WITH);
-                      } else
-                        return new SolrField(s, MatchType.EQUAL);
-                    })
-                  .collect(Collectors.toSet());
+            .splitAsStream(includeFields)
+            .map(String::trim)
+            .filter(s -> !s.equals("*"))
+            .map(s ->
+            {
+              if (s.startsWith("*")) {
+                return new SolrField(s.substring(1), MatchType.ENDS_WITH);
+              } else if (s.endsWith("*")) {
+                return new SolrField(s.substring(0, s.length() - 1), MatchType.STARTS_WITH);
+              } else
+                return new SolrField(s, MatchType.EQUAL);
+            })
+            .collect(Collectors.toSet());
   }
 
   /**
    * Parse command line
-   * 
+   *
    * @param args
    * @return
    * @throws ParseException
    */
-  private static CommandLine parseCommandLine(String[] args) throws ParseException
-  {
+  private static CommandLine parseCommandLine(String[] args) throws ParseException {
     Options cliOptions = new Options();
     cliOptions.addOption(SOLR_URL[0], SOLR_URL[1], true, "solr url - http://localhost:8983/solr/collection_name");
     cliOptions.addOption(ACTION_TYPE[0], ACTION_TYPE[1], true, "action type [" + String.join("|", ActionType.getNames()) + "]");
@@ -162,10 +160,10 @@ public class ConfigFactory {
     cliOptions.addOption(DRY_RUN[0], DRY_RUN[1], false, "dry run test");
     cliOptions.addOption(INCLUDE_FIELDS[0], INCLUDE_FIELDS[1], true, "simple comma separated fields list to be used during export. if not specified all the existing fields are used");
     cliOptions.addOption(SKIP_FIELDS[0], SKIP_FIELDS[1], true,
-                         "comma separated fields list to skip during export/import, this field list accepts for each field prefix/suffix a wildcard *. So you can specify skip all fields starting with name_*");
+            "comma separated fields list to skip during export/import, this field list accepts for each field prefix/suffix a wildcard *. So you can specify skip all fields starting with name_*");
     cliOptions.addOption(BLOCK_SIZE[0], BLOCK_SIZE[1], true, "block size (default " + CommandLineConfig.DEFAULT_BLOCK_SIZE + " documents)");
     cliOptions.addOption(SKIP_DOCS[0], SKIP_DOCS[1], true,
-                         "Number of documents to be skipped when loading from file. Useful when an error occurs, " + "so loading can continue from last successful save." + " ");
+            "Number of documents to be skipped when loading from file. Useful when an error occurs, " + "so loading can continue from last successful save." + " ");
     cliOptions.addOption(COMMIT_DURING_WORK[0], COMMIT_DURING_WORK[1], true, "Commit progress after specified number of docs. If not specified, " + "whole work will be committed.");
     cliOptions.addOption(DATETIME_FORMAT[0], DATETIME_FORMAT[1], true, "set custom DateTime format (default " + CommandLineConfig.DEFAULT_DATETIME_FORMAT + " )");
     cliOptions.addOption(HELP[0], HELP[1], false, "help");
