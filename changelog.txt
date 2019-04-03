@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v1.0.1 - 2019-04-??
+ - code cleanup
+ -
+
 v1.0.0 - 2019-04-03
  - Up to date dependencies
  - Build refactored to use Gradle instead of Maven
