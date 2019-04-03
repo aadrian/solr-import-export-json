@@ -1,9 +1,3 @@
-package it.damore.solr.importexport;
-
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Collector;
-
 /*
 This file is part of solr-import-export-json.
 
@@ -20,6 +14,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with solr-import-export-json.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+package it.damore.solr.importexport;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Collector;
 
 
 public class StreamUtils {

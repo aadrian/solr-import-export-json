@@ -1,15 +1,3 @@
-package it.damore.solr.importexport;
-
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.function.*;
-import java.util.stream.Collector;
-
-import static java.util.Objects.requireNonNull;
-
 /*
 This file is part of solr-import-export-json.
 
@@ -27,6 +15,17 @@ You should have received a copy of the GNU General Public License
 along with solr-import-export-json.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+package it.damore.solr.importexport;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.function.*;
+import java.util.stream.Collector;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
