@@ -53,6 +53,7 @@ public class CommandLineConfig {
 
     public static final int DEFAULT_BLOCK_SIZE = 5000;
     public static final String DEFAULT_DATETIME_FORMAT = "YYYY-MM-dd'T'HH:mm:sss'Z'";
+    public static final String DEFAULT_TIME_ZONE = "UTC";
 
     private ActionType actionType;
     private String solrUrl;
@@ -67,6 +68,7 @@ public class CommandLineConfig {
     private Integer commitAfter;
     private int blockSize = DEFAULT_BLOCK_SIZE;
     private String dateTimeFormat = DEFAULT_DATETIME_FORMAT;
+    private String timeZone = DEFAULT_TIME_ZONE;
 
     /**
      * @return the solrUrl
@@ -212,6 +214,14 @@ public class CommandLineConfig {
         this.dateTimeFormat = dateTimeFormat;
     }
 
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
     public Set<SolrField> getIncludeFieldSet() {
         return includeFieldSet;
     }
@@ -242,8 +252,8 @@ public class CommandLineConfig {
      */
     @Override
     public String toString() {
-        return String.format("CommandLineConfig [actionType=%s, solrUrl=%s, fileName=%s, deleteAll=%s, skipFieldsSet=%s, filterQuery=%s, uniqueKey=%s, dryRun=%s, blockSize=%s, dateTimeFormat=%s]",
-                actionType, solrUrl, fileName, deleteAll, skipFieldSet, filterQuery, uniqueKey, dryRun, blockSize, dateTimeFormat);
+        return String.format("CommandLineConfig [actionType=%s, solrUrl=%s, fileName=%s, deleteAll=%s, skipFieldsSet=%s, filterQuery=%s, uniqueKey=%s, dryRun=%s, blockSize=%s, dateTimeFormat=%s, timeZone=%s]",
+                actionType, solrUrl, fileName, deleteAll, skipFieldSet, filterQuery, uniqueKey, dryRun, blockSize, dateTimeFormat, timeZone);
     }
 
 }

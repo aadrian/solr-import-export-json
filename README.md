@@ -61,23 +61,27 @@ A list of **available** command line parameters:
 
 ### Real life examples
 
-export all documents into a json file
+Export all documents into a json file
 
     ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json
 
-import documents from json
+Export all documents into a json file using a different timeZone using IDs as defined by: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html#getAvailableIDs()
+
+    ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -t "Europe/Berlin" -o /tmp/collection.json
+
+Import documents from json
 
     ./bin/solr-import-export -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json 
 
-export part of documents, like adding a `fq`  Solr parameter to the export
+Export part of documents, like adding a `fq`  Solr parameter to the export
 
      ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json --filterQuery field:value
 
-import documents from json but first delete all documents in the collection
+Import documents from json but first delete all documents in the collection
 
      ./bin/solr-import-export -s http://localhost:8983/solr/collection -a import -o /tmp/collection.json --deleteAll
 
-export documents and skip few fields. In the example the will be skipped the fields: `field1_a`, all the fields starting with `field2_` and all the fields ending with `_date`
+Export documents and skip few fields. In the example the will be skipped the fields: `field1_a`, all the fields starting with `field2_` and all the fields ending with `_date`
 
      ./bin/solr-import-export -s http://localhost:8983/solr/collection -a export -o /tmp/collection.json --skipFields field1_a,field2_*,*_date
 

@@ -3,7 +3,8 @@ Changelog
 
 v1.0.1 - 2019-04-??
  - code cleanup
- -
+ - generate correct JSON
+ - add TimeZone as a config option
 
 v1.0.0 - 2019-04-03
  - Up to date dependencies

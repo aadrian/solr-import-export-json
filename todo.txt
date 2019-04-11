@@ -1,6 +1,6 @@
 ToDos
 =====
- - fix the TimeStamp bug since trying to "enforce" UTC leads to errors.
+ - [x] fix the TimeStamp bug since trying to "enforce" UTC leads to errors.
  - [x] produce correct JSON files. The current files are "pseudo-JSON"
  - replace the Jackson DataMapper since it's slow.
  - add formatting (and parsing) options

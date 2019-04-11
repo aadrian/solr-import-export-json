@@ -324,7 +324,7 @@ public class App {
 
     String cursorMark = CursorMarkParams.CURSOR_MARK_START;
 
-    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    TimeZone.setDefault(TimeZone.getTimeZone(config.getTimeZone()));
 
     DateFormat df = new SimpleDateFormat(config.getDateTimeFormat());
     objectMapper.setDateFormat(df);

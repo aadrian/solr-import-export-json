@@ -35,6 +35,7 @@ public class ConfigFactory {
   private static final String[] SKIP_FIELDS        = new String[] {"S", "skipFields"};
   private static final String[] INCLUDE_FIELDS     = new String[] {"i", "includeFields"};
   private static final String[] DATETIME_FORMAT    = new String[] {"F", "dateTimeFormat"};
+  private static final String[] TIME_ZONE          = new String[] {"t", "timeZone"};
 
 
   /**
@@ -60,6 +61,7 @@ public class ConfigFactory {
     String skipCount      = cmd.getOptionValue(SKIP_DOCS[1]);
     String commitAfter    = cmd.getOptionValue(COMMIT_DURING_WORK[1]);
     String dateTimeFormat = cmd.getOptionValue(DATETIME_FORMAT[1]);
+    String timeZone       = cmd.getOptionValue(TIME_ZONE[1]);
 
     if (actionType == null) {
       throw new MissingArgumentException("actionType should be [" + String.join("|", ActionType.getNames()) + "]");
@@ -116,6 +118,10 @@ public class ConfigFactory {
       c.setDateTimeFormat(dateTimeFormat);
     }
 
+    if (timeZone != null) {
+      c.setTimeZone(timeZone);
+    }
+
     logger.info("Current configuration " + c);
 
     return c;
@@ -166,6 +172,7 @@ public class ConfigFactory {
             "Number of documents to be skipped when loading from file. Useful when an error occurs, " + "so loading can continue from last successful save." + " ");
     cliOptions.addOption(COMMIT_DURING_WORK[0], COMMIT_DURING_WORK[1], true, "Commit progress after specified number of docs. If not specified, " + "whole work will be committed.");
     cliOptions.addOption(DATETIME_FORMAT[0], DATETIME_FORMAT[1], true, "set custom DateTime format (default " + CommandLineConfig.DEFAULT_DATETIME_FORMAT + " )");
+    cliOptions.addOption(TIME_ZONE[0], TIME_ZONE[1], true, "set custom TimeZone as required by 'TimeZone.getTimeZone()'(default '" + CommandLineConfig.DEFAULT_TIME_ZONE + "' )");
     cliOptions.addOption(HELP[0], HELP[1], false, "help");
     CommandLineParser parser = new DefaultParser();
     CommandLine cmd = parser.parse(cliOptions, args);
