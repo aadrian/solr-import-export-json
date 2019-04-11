@@ -340,8 +340,10 @@ public class App {
       logger.info("Creating " + config.getFileName());
 
       try (PrintWriter pw = new PrintWriter(outputFile)) {
+        pw.write("[\n");
         solrQuery.setRows(config.getBlockSize());
         boolean done = false;
+        boolean first = true;
         while (!done) {
           solrQuery.set(CursorMarkParams.CURSOR_MARK_PARAM, cursorMark);
           QueryResponse rsp = client.query(solrQuery);
@@ -367,8 +369,18 @@ public class App {
                               .findFirst()
                               .isPresent())
                       .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+              if(first) {
+                first = false;
+              } else {
+                pw.write(",");
+              }
               pw.write(objectMapper.writeValueAsString(collect));
             } else {
+              if(first){
+                first = false;
+              } else {
+                pw.write(",");
+              }
               pw.write(objectMapper.writeValueAsString(d));
             }
             pw.write("\n");
@@ -381,7 +393,7 @@ public class App {
 
           cursorMark = nextCursorMark;
         }
-
+        pw.write("]");
       }
     }
 
