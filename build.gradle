@@ -40,7 +40,7 @@ javadoc { failOnError false }
 
 // cleanup dist extra files
 clean.doFirst {
-    delete fileTree(dir: '/src/dist', include: ['*'])
+    delete fileTree(dir: 'src/dist', include: ['*'])
 }
 
 // startScripts are called before buildZip and buildTar
@@ -51,22 +51,22 @@ startScripts {
         copy {
             from './'
             include 'README.md'
-            into '/src/dist'
+            into 'src/dist'
         }
         copy {
             from './'
             include 'gpl.txt'
-            into '/src/dist'
+            into 'src/dist'
         }
         copy {
             from './'
             include 'changelog.txt'
-            into '/src/dist'
+            into 'src/dist'
         }
         copy {
             from './'
             include 'contributors.txt'
-            into '/src/dist'
+            into 'src/dist'
         }
     }
 }
