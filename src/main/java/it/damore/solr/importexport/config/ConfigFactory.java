@@ -157,14 +157,14 @@ public class ConfigFactory {
    */
   private static CommandLine parseCommandLine(String[] args) throws ParseException {
     Options cliOptions = new Options();
-    cliOptions.addOption(SOLR_URL[0], SOLR_URL[1], true, "solr url - http://localhost:8983/solr/collection_name");
+    cliOptions.addOption(SOLR_URL[0], SOLR_URL[1], true, "Solr URL - e.g. http://localhost:8983/solr/collection_name");
     cliOptions.addOption(ACTION_TYPE[0], ACTION_TYPE[1], true, "action type [" + String.join("|", ActionType.getNames()) + "]");
     cliOptions.addOption(OUTPUT[0], OUTPUT[1], true, "output file");
     cliOptions.addOption(DELETE_ALL[0], DELETE_ALL[1], false, "delete all documents before import");
     cliOptions.addOption(FILTER_QUERY[0], FILTER_QUERY[1], true, "filter Query during export");
     cliOptions.addOption(UNIQUE_KEY[0], UNIQUE_KEY[1], true, "specify unique key for deep paging");
     cliOptions.addOption(DRY_RUN[0], DRY_RUN[1], false, "dry run test");
-    cliOptions.addOption(INCLUDE_FIELDS[0], INCLUDE_FIELDS[1], true, "simple comma separated fields list to be used during export. if not specified all the existing fields are used");
+    cliOptions.addOption(INCLUDE_FIELDS[0], INCLUDE_FIELDS[1], true, "simple comma separated fields list to be used during export. If not specified, all the existing fields are used");
     cliOptions.addOption(SKIP_FIELDS[0], SKIP_FIELDS[1], true,
             "comma separated fields list to skip during export/import, this field list accepts for each field prefix/suffix a wildcard *. So you can specify skip all fields starting with name_*");
     cliOptions.addOption(BLOCK_SIZE[0], BLOCK_SIZE[1], true, "block size (default " + CommandLineConfig.DEFAULT_BLOCK_SIZE + " documents)");

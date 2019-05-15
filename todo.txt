@@ -2,6 +2,8 @@ ToDos
 =====
  - [x] fix the TimeStamp bug since trying to "enforce" UTC leads to errors.
  - [x] produce correct JSON files. The current files are "pseudo-JSON"
+ - add support for "correct JSON" file import (the current format is not JSON)
  - replace the Jackson DataMapper since it's slow.
  - add formatting (and parsing) options
  - add some missing unit tests
+ - use PicoCLI to simplify CLI handling

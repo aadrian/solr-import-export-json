@@ -44,7 +44,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.SolrInputField;
 import org.apache.solr.common.params.CursorMarkParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,13 +125,13 @@ public class App {
           case EXPORT:
           case BACKUP:
 
-            readAllDocuments(client, new File(config.getFileName()));
+            exportAllDocuments(client, new File(config.getFileName()));
             break;
 
           case RESTORE:
           case IMPORT:
 
-            writeAllDocuments(client, new File(config.getFileName()));
+            importAllDocuments(client, new File(config.getFileName()));
             break;
 
           default:
@@ -220,13 +219,15 @@ public class App {
   }
 
   /**
+   * Imports all Solr Documents from a pseudo-JSON file (JSON-Line?) into Solr.
+   *
    * @param client
    * @param outputFile
    * @throws FileNotFoundException
    * @throws IOException
    * @throws SolrServerException
    */
-  private static void writeAllDocuments(HttpSolrClient client, File outputFile) throws FileNotFoundException, IOException, SolrServerException {
+  private static void importAllDocuments(HttpSolrClient client, File outputFile) throws FileNotFoundException, IOException, SolrServerException {
     AtomicInteger counter = new AtomicInteger(10000);
     if (!config.getDryRun() && config.getDeleteAll()) {
       logger.info("delete all!");
@@ -299,12 +300,15 @@ public class App {
   }
 
   /**
-   * @param client
-   * @param outputFile
+   * Exports all Solr documents to a correct JSON file.
+   *
+   * @param client the Solr client instance
+   * @param outputFile the output file to write the documents to.
+   *
    * @throws SolrServerException
    * @throws IOException
    */
-  private static void readAllDocuments(HttpSolrClient client, File outputFile) throws SolrServerException, IOException {
+  private static void exportAllDocuments(HttpSolrClient client, File outputFile) throws SolrServerException, IOException {
 
     SolrQuery solrQuery = new SolrQuery();
     solrQuery.setTimeAllowed(-1);

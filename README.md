@@ -21,7 +21,7 @@ The steps above will create the distributions in the `./build/distributions/` di
 
 ### Install
 
-This tool requires only Java 8 (e,g. Zulu OpenJDK).
+This tool requires only Java 8 (e.g. Zulu OpenJDK).
 
 Just copy to the target machine the distribution produced in the build task above(or download the distribution from GitHub) and unpack it.
 
@@ -43,19 +43,32 @@ A list of **available** command line parameters:
         [-s <arg>] [-S <arg>]
      solr-import-export-json
 
-     -a,--actionType <arg>    action type [import|export|backup|restore]
-     -d,--deleteAll           delete all documents before import
-     -D,--dryRun              dry run test
-     -f,--filterQuery <arg>   filter Query during export
-     -h,--help                help
-     -k,--uniqueKey <arg>     specify unique key for deep paging
-     -o,--output <arg>        output file
-     -s,--solrUrl <arg>       solr url
-     -S,--skipFields <arg>    comma separated fields list to skip during
-                              export/import, this field accepts start and end
-                              wildcard *. So you can specify skip all fields
-                              starting with name_*
-
+     -a,--actionType <arg>           action type [import|export|backup|restore]
+     -b,--blockSize <arg>            block size (default 5000 documents)
+     -c,--commitDuringImport <arg>   Commit progress after specified number of
+                                     docs. If not specified, whole work will
+                                     be committed.
+     -d,--deleteAll                  delete all documents before import
+     -D,--dryRun                     dry run test
+     -f,--filterQuery <arg>          filter Query during export
+     -F,--dateTimeFormat <arg>       set custom DateTime format (default YYYY-MM-dd'T'HH:mm:sss'Z' )
+     -h,--help                       help
+     -i,--includeFields <arg>        simple comma separated fields list to be
+                                     used during export. If not specified all,
+                                     the existing fields are used
+     -k,--uniqueKey <arg>            specify unique key for deep paging
+     -o,--output <arg>               output file
+     -s,--solrUrl <arg>              Solr url
+     -S,--skipFields <arg>           comma separated fields list to skip during
+                                     export/import, this field accepts start and end
+                                     wildcard *. So you can specify skip all fields
+                                     starting with name_*
+     -t,--timeZone <arg>             set custom TimeZone as required by
+                                     'TimeZone.getTimeZone()'(default 'UTC' )
+     -x,--skipCount <arg>            Number of documents to be skipped when
+                                     loading from file. Useful when an error
+                                     occurs, so loading can continue from last
+                                     successful save.
 
 
 
