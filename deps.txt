@@ -47,9 +47,6 @@ compileClasspath - Compile classpath for source set 'main'.
 |    \--- org.slf4j:slf4j-api:1.7.26
 +--- commons-logging:commons-logging:1.2
 +--- commons-codec:commons-codec:1.12
-+--- org.eclipse.persistence:org.eclipse.persistence.moxy:2.7.4
-|    \--- org.eclipse.persistence:org.eclipse.persistence.core:2.7.4
-|         \--- org.eclipse.persistence:org.eclipse.persistence.asm:2.7.4
 +--- commons-cli:commons-cli:1.4
 \--- com.fasterxml.jackson.core:jackson-databind:2.9.8
      +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
@@ -88,9 +85,6 @@ default - Configuration for default artifacts.
 |    \--- org.slf4j:slf4j-api:1.7.26
 +--- commons-logging:commons-logging:1.2
 +--- commons-codec:commons-codec:1.12
-+--- org.eclipse.persistence:org.eclipse.persistence.moxy:2.7.4
-|    \--- org.eclipse.persistence:org.eclipse.persistence.core:2.7.4
-|         \--- org.eclipse.persistence:org.eclipse.persistence.asm:2.7.4
 +--- commons-cli:commons-cli:1.4
 \--- com.fasterxml.jackson.core:jackson-databind:2.9.8
      +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
@@ -102,7 +96,6 @@ implementation - Implementation only dependencies for source set 'main'. (n)
 +--- org.slf4j:log4j-over-slf4j:1.7.26 (n)
 +--- commons-logging:commons-logging:1.2 (n)
 +--- commons-codec:commons-codec:1.12 (n)
-+--- org.eclipse.persistence:org.eclipse.persistence.moxy:2.7.4 (n)
 +--- commons-cli:commons-cli:1.4 (n)
 \--- com.fasterxml.jackson.core:jackson-databind:2.9.8 (n)
 
@@ -139,9 +132,6 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |    \--- org.slf4j:slf4j-api:1.7.26
 +--- commons-logging:commons-logging:1.2
 +--- commons-codec:commons-codec:1.12
-+--- org.eclipse.persistence:org.eclipse.persistence.moxy:2.7.4
-|    \--- org.eclipse.persistence:org.eclipse.persistence.core:2.7.4
-|         \--- org.eclipse.persistence:org.eclipse.persistence.asm:2.7.4
 +--- commons-cli:commons-cli:1.4
 \--- com.fasterxml.jackson.core:jackson-databind:2.9.8
      +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
@@ -189,9 +179,6 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    \--- org.slf4j:slf4j-api:1.7.26
 +--- commons-logging:commons-logging:1.2
 +--- commons-codec:commons-codec:1.12
-+--- org.eclipse.persistence:org.eclipse.persistence.moxy:2.7.4
-|    \--- org.eclipse.persistence:org.eclipse.persistence.core:2.7.4
-|         \--- org.eclipse.persistence:org.eclipse.persistence.asm:2.7.4
 +--- commons-cli:commons-cli:1.4
 +--- com.fasterxml.jackson.core:jackson-databind:2.9.8
 |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
@@ -238,9 +225,6 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    \--- org.slf4j:slf4j-api:1.7.26
 +--- commons-logging:commons-logging:1.2
 +--- commons-codec:commons-codec:1.12
-+--- org.eclipse.persistence:org.eclipse.persistence.moxy:2.7.4
-|    \--- org.eclipse.persistence:org.eclipse.persistence.core:2.7.4
-|         \--- org.eclipse.persistence:org.eclipse.persistence.asm:2.7.4
 +--- commons-cli:commons-cli:1.4
 +--- com.fasterxml.jackson.core:jackson-databind:2.9.8
 |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
@@ -257,5 +241,5 @@ No dependencies
 
 A web-based, searchable dependency report is available by adding the --scan option.
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 3s
 1 actionable task: 1 executed
